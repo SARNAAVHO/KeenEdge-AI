@@ -2,6 +2,9 @@
 
 This is a full-stack AI-powered mock interview platform that simulates real-time interviews using speech-to-text, webcam integration, AI-generated feedback, and timed responses. It provides users with a realistic interview experience and instant feedback based on their answers.
 
+## 🔗 Live Demo
+👉 Try it now: [KeenEdge-AI](https://keenedge-ai.netlify.app)
+
 ## 🚀 Features
 
 - 🎤 **Voice-based Answering** — Record your answers using voice input (Web Speech API)
