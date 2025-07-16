@@ -26,28 +26,6 @@ This is a full-stack AI-powered mock interview platform that simulates real-time
 - **Neon.tech** — Managed PostgreSQL database
 - **Gemini AI (or OpenAI)** for feedback generation
 
-## 📁 Folder Structure (Key)
-📦 app/
-┣ 📂dashboard/
-┃ ┣ 📂interview/
-┃ ┃ ┣ 📂[interviewId]/
-┃ ┃ ┃ ┣ 📜page.jsx → Interview start screen
-┃ ┃ ┃ ┣ 📜feedback.jsx → Feedback view
-┃ ┃ ┣ 📜page.jsx → List of previous interviews
-
-┣ 📜page.jsx → Landing / Home
-
-📦 components/
-┣ 📜InterviewCard.jsx
-┣ 📜RecordAnswerSection.jsx
-┣ 📜QuestionSection.jsx
-┣ 📜Collapsible UI components
-┣ 📜Button, Toast, etc.
-
-📦 utils/
-┣ 📜db.js → Drizzle DB setup
-┣ 📜schema.js → PostgreSQL schema
-┣ 📜GeminiAIModel.js → Generates feedback from LLM
 
 ## 🧠 How It Works
 
