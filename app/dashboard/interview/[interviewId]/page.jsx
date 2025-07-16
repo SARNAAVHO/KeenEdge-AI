@@ -1,12 +1,13 @@
 "use client"
 import { Button } from '@/components/ui/button'
 import { db } from '@/utils/db'
-import { MockInterview } from '@/utils/schema'
+import { MockInterview, UserAnswer } from '@/utils/schema'
 import { eq } from 'drizzle-orm'
 import { Lightbulb, WebcamIcon } from 'lucide-react'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import Webcam from 'react-webcam'
+import { useRouter } from 'next/navigation'
 
 function Interview({params}) {
 
@@ -25,9 +26,20 @@ function Interview({params}) {
     setInterviewData(result[0])
   }
 
+  const router = useRouter();
+  const handleStartInterview = async () => {
+    try {
+      await db.delete(UserAnswer).where(eq(UserAnswer.mockIdRef, interviewId))
+      router.push(`/dashboard/interview/${interviewId}/start`)
+    } catch (err) {
+      console.error("Failed to delete previous feedback: ", err)
+    }
+  }
+
+
   return (
     <div className='my-8 flex justify-center flex-col items-center'>
-      <h2 className='font-bold text-xl'>Let's Get Started</h2>
+      <h2 className='font-bold text-2xl'>Let's Get Started</h2>
       <div className='grid grid-cols-1 md:grid-cols-2 gap-10 my-5'>
 
         <div className='flex flex-col'>
@@ -43,26 +55,35 @@ function Interview({params}) {
         </div>
 
         <div>
-        {webCamEnabled? <Webcam
-        onUserMedia={()=>setwebCamEnabled(true)}
-        onUserMediaError={()=>setwebCamEnabled(false)}
-        mirrored={true}
-        style={{
-          height:400,
-          width:400,
-        }}
-        />
-        :
-        <> 
-        <WebcamIcon className={'w-full h-72 my-5 p-20 bg-[rgb(33,37,75)] rounded-lg border-none'}/> 
-        <div className="flex justify-center items-center mt-3">
-        <Button className={'p-4 w-full cursor-pointer'} onClick={()=>setwebCamEnabled(true)}>Enable Webcam and Microphone</Button></div>
-        </>}
+        {webCamEnabled ? (
+  <div className="flex justify-center items-center my-5">
+    <Webcam
+      onUserMedia={() => setwebCamEnabled(true)}
+      onUserMediaError={() => setwebCamEnabled(false)}
+      mirrored={true}
+      className="rounded-lg border border-gray-700"
+      style={{
+        width: 400,
+        height: 340,
+        objectFit: 'cover',
+      }}
+    />
+  </div>
+) : (
+  <>
+    <WebcamIcon className="w-full h-72 my-5 p-20 bg-[rgb(33,37,75)] rounded-lg border-none" />
+    <div className="flex justify-center items-center mt-3">
+      <Button className="p-4 w-full cursor-pointer" onClick={() => setwebCamEnabled(true)}>
+        Enable Webcam and Microphone
+      </Button>
+    </div>
+  </>
+)}
 
         <div className='mt-2 flex justify-center items-center'>
-          <Link href={'/dashboard/interview/'+interviewId+'/start'}>
-            <Button className={'cursor-pointer'}>Start Interview</Button>  
-          </Link>
+          {/* <Link href={'/dashboard/interview/'+interviewId+'/start'}> */}
+            <Button className={'cursor-pointer'} onClick={handleStartInterview}>Start Interview</Button>  
+          {/* </Link> */}
         </div>
         
         </div>
